@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etsy Business Manager | Handmade Art Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo">🎨</div>
+                <h1>Etsy Business<br><span>Manager</span></h1>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-section="dashboard" onclick="switchTab(this, 'dashboard')">
+                    <span class="icon">📊</span><span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-section="inventory" onclick="switchTab(this, 'inventory')">
+                    <span class="icon">📦</span><span>Inventory</span>
+                </button>
+                <button class="nav-item" data-section="marketing" onclick="switchTab(this, 'marketing')">
+                    <span class="icon">📱</span><span>Marketing</span>
+                </button>
+                <button class="nav-item" data-section="customers" onclick="switchTab(this, 'customers')">
+                    <span class="icon">💬</span><span>Customers</span>
+                </button>
+                <button class="nav-item" data-section="shipping" onclick="switchTab(this, 'shipping')">
+                    <span class="icon">🚚</span><span>Shipping</span>
+                </button>
+                <button class="nav-item" data-section="reminders" onclick="switchTab(this, 'reminders')">
+                    <span class="icon">⏰</span><span>Reminders</span>
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="status-badge">
+                    <span class="status-dot"></span><span>Agent Online</span>
+                </div>
+                <p class="version">v1.0.0 | Google ADK</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="Ask your business manager anything..." id="globalSearch">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="top-actions">
+                    <button class="btn-icon">🔔</button>
+                    <button class="btn-icon">⚙️</button>
+                    <div class="user-profile">
+                        <div class="avatar">👤</div><span>Shop Owner</span>
+                    </div>
+                </div>
+            </header>
+
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <div>
+                        <h2>Dashboard</h2>
+                        <p class="subtitle">Overview of your handmade business</p>
+                    </div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">📦</div>
+                        <div class="metric-info">
+                            <h3>Inventory</h3><p class="metric-value" id="inventoryCount">12</p><span class="metric-label">Active Products</span>
+                        </div>
+                    </div>
+                    <div class="metric-card alert">
+                        <div class="metric-icon">⚠️</div>
+                        <div class="metric-info">
+                            <h3>Low Stock</h3><p class="metric-value" id="lowStockCount">3</p><span class="metric-label">Items Need Restocking</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📅</div>
+                        <div class="metric-info">
+                            <h3>Upcoming</h3><p class="metric-value" id="upcomingTasks">5</p><span class="metric-label">Tasks This Week</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📱</div>
+                        <div class="metric-info">
+                            <h3>Content</h3><p class="metric-value" id="scheduledPosts">2</p><span class="metric-label">Scheduled Posts</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3>🤖 Agent Chat</h3><span class="badge">Live</span>
+                        </div>
+                        <div class="chat-container" id="chatContainer">
+                            <div class="chat-message agent">
+                                <div class="message-avatar">🎨</div>
+                                <div class="message-content">
+                                    <p>Welcome back! I'm your Etsy Business Manager. I can help you with inventory, Instagram marketing, customer messages, shipping costs, and reminders. What would you like to work on today?</p>
+                                    <span class="message-time">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" id="chatInput" placeholder="Type your request... (e.g., 'Check my inventory' or 'Write an Instagram caption')">
+                            <button id="sendBtn" class="btn-primary" onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><h3>📋 Quick Actions</h3></div>
+                        <div class="quick-actions">
+                            <button class="action-btn" onclick="quickAction('check_stock')">
+                                <span class="action-icon">📦</span><span>Check Stock</span>
+                            </button>
+                            <button class="action-btn" onclick="quickAction('low_stock')">
+                                <span class="action-icon">⚠️</span><span>Low Stock Alert</span>
+                            </button>
+                            <button class="action-btn" onclick="quickAction('create_caption')">
+                                <span class="action-icon">📱</span><span>New IG Caption</span>
+                            </button>
+                            <button class="action-btn" onclick="quickAction('shipping_cost')">
+                                <span class="action-icon">🚚</span><span>Calc Shipping</span>
+                            </button>
+                            <button class="action-btn" onclick="quickAction('draft_reply')">
+                                <span class="action-icon">💬</span><span>Draft Reply</span>
+                            </button>
+                            <button class="action-btn" onclick="quickAction('set_reminder')">
+                                <span class="action-icon">⏰</span><span>Set Reminder</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="inventory" class="content-section">
+                <div class="section-header">
+                    <h2>Inventory Management</h2>
+                    <button class="btn-primary">+ Add Product</button>
+                </div>
+                <div class="panel">
+                    <div class="table-toolbar">
+                        <input type="text" placeholder="Search products..." class="table-search">
+                        <select class="table-filter">
+                            <option>All Categories</option><option>Keychains</option><option>Jewelry</option><option>Crochet</option><option>Bookmarks</option>
+                        </select>
+                    </div>
+                    <table class="data-table">
+                        <thead><tr><th>Product</th><th>Category</th><th>Stock</th><th>Cost</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody>
+                            <tr><td>Ocean Wave Crochet Bookmark</td><td>Bookmarks</td><td>8</td><td>$2.50</td><td>$12.00</td><td>🟢 Active</td><td>Edit</td></tr>
+                            <tr><td>Resin Flower Keychain</td><td>Keychains</td><td>3</td><td>$3.00</td><td>$15.00</td><td>🟡 Low</td><td>Edit</td></tr>
+                            <tr><td>Wire Wrap Moon Pendant</td><td>Jewelry</td><td>5</td><td>$4.50</td><td>$28.00</td><td>🟡 Low</td><td>Edit</td></tr>
+                            <tr><td>Amigurumi Bear</td><td>Crochet</td><td>2</td><td>$5.00</td><td>$35.00</td><td>🔴 Critical</td><td>Edit</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="marketing" class="content-section">
+                <div class="section-header"><h2>Marketing & Instagram</h2></div>
+                <div class="dashboard-grid">
+                    <div class="panel">
+                        <div class="panel-header"><h3>✨ Caption Generator</h3></div>
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" id="capProduct" placeholder="e.g., Ocean Wave Crochet Bookmark" value="Ocean Wave Crochet Bookmark">
+                        </div>
+                        <div class="form-group">
+                            <label>Product Type</label>
+                            <select id="capType"><option>keychain</option><option>jewelry</option><option selected>crochet</option><option>bookmark</option></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Mood</label>
+                            <select id="capMood"><option selected>warm</option><option>playful</option><option>elegant</option><option>cozy</option><option>minimalist</option></select>
+                        </div>
+                        <div style="padding: 0 20px 16px;">
+                            <button class="btn-primary" onclick="generateCaption()">Generate Caption</button>
+                        </div>
+                        <div class="output-box" id="captionOutput">Click "Generate Caption" to create your Instagram post...</div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><h3>📅 Content Calendar</h3></div>
+                        <div style="padding: 20px;">
+                            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Upcoming scheduled posts:</p>
+                            <div style="padding: 12px; background: #f8fafc; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid var(--primary);">
+                                <strong>Jul 8</strong> — Instagram | Product Showcase<br>
+                                <span style="font-size: 13px; color: var(--text-secondary);">Ocean Wave Crochet Bookmark</span>
+                            </div>
+                            <div style="padding: 12px; background: #f8fafc; border-radius: 8px; border-left: 3px solid var(--secondary);">
+                                <strong>Jul 12</strong> — Instagram | Behind the Scenes<br>
+                                <span style="font-size: 13px; color: var(--text-secondary);">Crochet process timelapse</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="customers" class="content-section">
+                <div class="section-header"><h2>Customer Communications</h2></div>
+                <div class="panel" style="padding: 20px;">
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">Use the chat on the Dashboard to draft customer replies, log interactions, and view customer history.</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div style="padding: 16px; background: #f8fafc; border-radius: 8px;">
+                            <h4 style="margin-bottom: 8px;">💬 Recent Interactions</h4>
+                            <p style="font-size: 13px; color: var(--text-secondary);">Sarah M. — Custom order inquiry (2 hrs ago)</p>
+                            <p style="font-size: 13px; color: var(--text-secondary);">Mike T. — Shipping question (5 hrs ago)</p>
+                            <p style="font-size: 13px; color: var(--text-secondary);">Emma L. — Review thank you (1 day ago)</p>
+                        </div>
+                        <div style="padding: 16px; background: #f8fafc; border-radius: 8px;">
+                            <h4 style="margin-bottom: 8px;">⭐ Recent Reviews</h4>
+                            <p style="font-size: 13px; color: var(--text-secondary);">★★★★★ "Absolutely beautiful bookmark!"</p>
+                            <p style="font-size: 13px; color: var(--text-secondary);">★★★★★ "Perfect gift for my sister"</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="shipping" class="content-section">
+                <div class="section-header"><h2>Shipping & Orders</h2></div>
+                <div class="panel" style="padding: 20px;">
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">Use the chat on the Dashboard to calculate shipping, create orders, and get packaging recommendations.</p>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                        <div style="padding: 20px; text-align: center; background: #f8fafc; border-radius: 8px;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">📦</div>
+                            <h4>USPS First Class</h4>
+                            <p style="font-size: 13px; color: var(--text-secondary);">$4.50 — 2-5 days</p>
+                        </div>
+                        <div style="padding: 20px; text-align: center; background: #f8fafc; border-radius: 8px;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">🚚</div>
+                            <h4>UPS Ground</h4>
+                            <p style="font-size: 13px; color: var(--text-secondary);">$10.50 — 3-5 days</p>
+                        </div>
+                        <div style="padding: 20px; text-align: center; background: #f8fafc; border-radius: 8px;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">✈️</div>
+                            <h4>FedEx Express</h4>
+                            <p style="font-size: 13px; color: var(--text-secondary);">$28.00 — 1-2 days</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="reminders" class="content-section">
+                <div class="section-header"><h2>Reminders & Tasks</h2></div>
+                <div class="panel" style="padding: 20px;">
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">Use the chat on the Dashboard to set deadlines, check upcoming tasks, and get restock suggestions.</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div style="padding: 16px; background: #fef2f2; border-radius: 8px; border-left: 3px solid var(--danger);">
+                            <h4 style="margin-bottom: 8px; color: var(--danger);">🔴 Urgent</h4>
+                            <p style="font-size: 13px;">Restock Amigurumi Bear materials (2 left!)</p>
+                            <p style="font-size: 13px;">Reply to Sarah's custom order inquiry</p>
+                        </div>
+                        <div style="padding: 16px; background: #fffbeb; border-radius: 8px; border-left: 3px solid var(--warning);">
+                            <h4 style="margin-bottom: 8px; color: var(--warning);">🟡 This Week</h4>
+                            <p style="font-size: 13px;">Craft fair application deadline (Jul 10)</p>
+                            <p style="font-size: 13px;">Order yarn supply run</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

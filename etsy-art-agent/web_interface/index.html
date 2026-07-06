@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtisanManager | Premium Etsy Art Business Dashboard</title>
+    <!-- Google Fonts for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo">✦</div>
+                <h1>Artisan<span>Manager</span></h1>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-section="dashboard" onclick="switchSection('dashboard')">
+                    <span class="icon">📊</span><span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-section="inventory" onclick="switchSection('inventory')">
+                    <span class="icon">📦</span><span>Inventory</span>
+                </button>
+                <button class="nav-item" data-section="marketing" onclick="switchSection('marketing')">
+                    <span class="icon">📱</span><span>Instagram Hub</span>
+                </button>
+                <button class="nav-item" data-section="customers" onclick="switchSection('customers')">
+                    <span class="icon">👥</span><span>Client CRM</span>
+                </button>
+                <button class="nav-item" data-section="shipping" onclick="switchSection('shipping')">
+                    <span class="icon">🚚</span><span>Logistics</span>
+                </button>
+                <button class="nav-item" data-section="reminders" onclick="switchSection('reminders')">
+                    <span class="icon">⏰</span><span>Reminders & Tasks</span>
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="status-badge connected" id="connectionBadge">
+                    <span class="status-dot"></span><span id="connectionText">Gemini Live</span>
+                </div>
+                <p class="version">v2.0.0 | Google ADK Capstone</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation Bar -->
+            <header class="top-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search orders, clients, or items..." id="globalSearch">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="top-actions">
+                    <div class="system-alerts">
+                        <button class="btn-icon alert-active" id="alertBell">🔔</button>
+                        <div class="alerts-dropdown" id="alertsDropdown">
+                            <h4>Critical Shop Alerts</h4>
+                            <ul id="alertList">
+                                <li>Loading alerts...</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="btn-icon" onclick="switchSection('reminders')">⚙️</button>
+                    <div class="user-profile">
+                        <div class="avatar">👩‍🎨</div>
+                        <div class="profile-meta">
+                            <span class="name">Elena Green</span>
+                            <span class="role">Shop Owner</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- SECTION: Dashboard -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <div>
+                        <h2>Creative Studio Overview</h2>
+                        <p class="subtitle">Real-time health indicators of your Etsy shop & active sub-agents</p>
+                    </div>
+                </div>
+
+                <!-- Metrics Dashboard Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">📦</div>
+                        <div class="metric-info">
+                            <h3>Total Stock Value</h3>
+                            <p class="metric-value" id="dashboardStockValue">$0.00</p>
+                            <span class="metric-label" id="dashboardActiveItems">0 Products Loaded</span>
+                        </div>
+                    </div>
+                    <div class="metric-card alert" id="lowStockCard">
+                        <div class="metric-icon">⚠️</div>
+                        <div class="metric-info">
+                            <h3>Restock Alerts</h3>
+                            <p class="metric-value" id="dashboardLowStockCount">0</p>
+                            <span class="metric-label">Needs Attention</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">👥</div>
+                        <div class="metric-info">
+                            <h3>Active Clients</h3>
+                            <p class="metric-value" id="dashboardClientCount">0</p>
+                            <span class="metric-label">CRM Directory</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">⏰</div>
+                        <div class="metric-info">
+                            <h3>Pending Tasks</h3>
+                            <p class="metric-value" id="dashboardPendingTasks">0</p>
+                            <span class="metric-label">Due this week</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Orders CRM Pipeline -->
+                <div class="panel crm-pipeline-panel">
+                    <div class="panel-header">
+                        <h3>🎨 Custom Orders Pipeline</h3>
+                        <span class="badge">Drag & Progress Status</span>
+                    </div>
+                    <div class="crm-board">
+                        <div class="crm-column" data-status="Inquiry">
+                            <div class="crm-column-header inquiry">Inquiry</div>
+                            <div class="crm-cards-container" id="crmInquiry"></div>
+                        </div>
+                        <div class="crm-column" data-status="Sketching">
+                            <div class="crm-column-header sketching">Sketching</div>
+                            <div class="crm-cards-container" id="crmSketching"></div>
+                        </div>
+                        <div class="crm-column" data-status="In Production">
+                            <div class="crm-column-header production">In Production</div>
+                            <div class="crm-cards-container" id="crmProduction"></div>
+                        </div>
+                        <div class="crm-column" data-status="Shipped">
+                            <div class="crm-column-header shipped">Shipped</div>
+                            <div class="crm-cards-container" id="crmShipped"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat & Quick Actions -->
+                <div class="dashboard-grid">
+                    <!-- Live Agent Chat -->
+                    <div class="panel chat-panel">
+                        <div class="panel-header">
+                            <h3>🤖 Shop Assistant Co-Pilot</h3>
+                            <div class="delegation-status" id="delegationStatus">
+                                <span>Coordinating Sub-agents</span>
+                            </div>
+                        </div>
+                        <div class="chat-container" id="chatContainer">
+                            <div class="chat-message agent">
+                                <div class="message-avatar">✧</div>
+                                <div class="message-content">
+                                    <p>Hello Elena! I am your primary coordinator. I've successfully connected to your sub-agents (Inventory, Marketing, Support, Shipping, and Reminders). Ask me anything about your artisan shop operations!</p>
+                                    <span class="message-time">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" id="chatInput" placeholder="Ask your business manager anything... (e.g. 'Show low stock' or 'Draft email to Michael')">
+                            <button id="sendBtn" class="btn-primary">Send</button>
+                        </div>
+                    </div>
+
+                    <!-- Prompts Library / Quick Actions -->
+                    <div class="panel quick-actions-panel">
+                        <div class="panel-header">
+                            <h3>⚡ Sub-Agent Quick Queries</h3>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="action-btn" onclick="triggerQuickAction('Show current stock and low items')">
+                                <span class="action-icon">📦</span>
+                                <h4>Inventory Manager</h4>
+                                <p>Check Stock & Alerts</p>
+                            </button>
+                            <button class="action-btn" onclick="triggerQuickAction('Run profit margin analysis for all products')">
+                                <span class="action-icon">📊</span>
+                                <h4>Financials</h4>
+                                <p>Margin Analysis</p>
+                            </button>
+                            <button class="action-btn" onclick="triggerQuickAction('Write an elegant Instagram caption for the Wire Wrap moonstone pendant')">
+                                <span class="action-icon">📱</span>
+                                <h4>Marketing Manager</h4>
+                                <p>Draft IG Caption</p>
+                            </button>
+                            <button class="action-btn" onclick="triggerQuickAction('Review all pending messages and clients')">
+                                <span class="action-icon">💬</span>
+                                <h4>Support Agent</h4>
+                                <p>Draft Customer Replies</p>
+                            </button>
+                            <button class="action-btn" onclick="triggerQuickAction('Calculate USPS shipping cost for standard packaging (5oz) to California')">
+                                <span class="action-icon">🚚</span>
+                                <h4>Shipping Logistics</h4>
+                                <p>Calculate Rates</p>
+                            </button>
+                            <button class="action-btn" onclick="triggerQuickAction('List all urgent tasks and craft fair dates')">
+                                <span class="action-icon">⏰</span>
+                                <h4>Task Assistant</h4>
+                                <p>Upcoming Reminders</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Inventory -->
+            <section id="inventory" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Inventory Manager</h2>
+                        <p class="subtitle">Track supply margins, add items, and increment stocks</p>
+                    </div>
+                    <button class="btn-primary" onclick="openModal('addProductModal')">+ New Product</button>
+                </div>
+
+                <div class="panel table-panel">
+                    <div class="table-toolbar">
+                        <input type="text" placeholder="Filter item names or tags..." class="table-search" id="inventorySearch" oninput="filterInventory()">
+                        <select class="table-filter" id="inventoryCategoryFilter" onchange="filterInventory()">
+                            <option value="all">All Categories</option>
+                            <option value="crochet">Crochet</option>
+                            <option value="bookmarks">Bookmarks</option>
+                            <option value="keychains">Keychains</option>
+                            <option value="jewelry">Jewelry</option>
+                        </select>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Item Code</th>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Stock Level</th>
+                                    <th>Material Cost</th>
+                                    <th>Retail Price</th>
+                                    <th>Estimated Margin</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryTableBody">
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Financial Analysis Highlights -->
+                <div class="financials-row">
+                    <div class="financial-card">
+                        <h4>Total Material Capital</h4>
+                        <p id="calcMaterialCapital">$0.00</p>
+                    </div>
+                    <div class="financial-card">
+                        <h4>Total Potential Revenue</h4>
+                        <p id="calcPotentialRevenue">$0.00</p>
+                    </div>
+                    <div class="financial-card highlight">
+                        <h4>Estimated Shop Profit</h4>
+                        <p id="calcPotentialProfit">$0.00</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Marketing Hub -->
+            <section id="marketing" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Instagram Marketing Hub</h2>
+                        <p class="subtitle">Generate captions using templates and preview layouts</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Builder and Template Form -->
+                    <div class="panel form-panel">
+                        <div class="panel-header">
+                            <h3>✨ Campaign Creator</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="mktTemplate">Select Campaign Template</label>
+                            <select id="mktTemplate" onchange="applyCampaignTemplate()">
+                                <option value="product_feature" selected>Meet the Maker / Product Showcase</option>
+                                <option value="seasonal_sale">Seasonal / Holiday Discount</option>
+                                <option value="behind_the_scenes">Behind the Scenes Process</option>
+                                <option value="flash_sale">Flash Sale / Limited Quantities</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="mktProductSelect">Feature Product</label>
+                            <select id="mktProductSelect" onchange="syncMarketingProductMeta()">
+                                <!-- Dynamically filled from inventory -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="mktProductType">Product Type Tag</label>
+                            <input type="text" id="mktProductType" placeholder="e.g. crochet plush">
+                        </div>
+                        <div class="form-group">
+                            <label for="mktMood">Vibe Mood Tone</label>
+                            <select id="mktMood">
+                                <option value="warm">Warm & Cosy</option>
+                                <option value="playful">Fun & Playful</option>
+                                <option value="elegant">Luxury & Elegant</option>
+                                <option value="cozy">Slow-living Cozy</option>
+                                <option value="minimalist">Clean Minimalist</option>
+                            </select>
+                        </div>
+                        <div style="padding: 0 20px 20px;">
+                            <button class="btn-primary w-100" onclick="generateMarketingContent()">Generate Caption</button>
+                        </div>
+                    </div>
+
+                    <!-- Instagram Mockup Phone Previewer -->
+                    <div class="panel phone-preview-panel">
+                        <div class="panel-header">
+                            <h3>📱 Live Feed Preview</h3>
+                        </div>
+                        <div class="phone-container">
+                            <div class="phone-screen">
+                                <div class="instagram-post">
+                                    <div class="ig-header">
+                                        <div class="ig-avatar">👩‍🎨</div>
+                                        <div class="ig-username">
+                                            <strong>artisan.studio</strong>
+                                            <span>Original Craft</span>
+                                        </div>
+                                        <span class="ig-dots">•••</span>
+                                    </div>
+                                    <div class="ig-image-box">
+                                        <div class="ig-photo-placeholder" id="igPhotoPlaceholder">
+                                            <span>Photo Preview</span>
+                                        </div>
+                                    </div>
+                                    <div class="ig-actions">
+                                        <span>❤️ 💬 ✈️</span>
+                                        <span class="ig-bookmark">📥</span>
+                                    </div>
+                                    <div class="ig-caption-area">
+                                        <p><strong>artisan.studio</strong> <span id="igCaptionText">Your generated caption will render here with hashtags...</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Customer CRM -->
+            <section id="customers" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Client Management & CRM</h2>
+                        <p class="subtitle">Maintain customer conversations, log new interactions, and track notes</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Client Directory -->
+                    <div class="panel list-panel">
+                        <div class="panel-header">
+                            <h3>👥 Customer Directory</h3>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Contact Email</th>
+                                        <th>Total Orders</th>
+                                        <th>Tags</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="crmCustomerList">
+                                    <!-- Loaded dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Interaction Logger -->
+                    <div class="panel logger-panel">
+                        <div class="panel-header">
+                            <h3>📝 Log Customer Interaction</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="logCustomerName">Client Name</label>
+                            <input type="text" id="logCustomerName" placeholder="e.g. Sarah Miller" list="clientSuggestions">
+                            <datalist id="clientSuggestions">
+                                <!-- Suggested client names loaded dynamically -->
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label for="logChannel">Communication Channel</label>
+                            <select id="logChannel">
+                                    <option value="Etsy Message">Etsy Conversation Inbox</option>
+                                    <option value="Email">Email Thread</option>
+                                    <option value="Instagram DM">Instagram DM</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="logContent">Conversation Snippet / Message Content</label>
+                            <textarea id="logContent" rows="5" placeholder="Log details of the inquiry or response..."></textarea>
+                        </div>
+                        <div style="padding: 0 20px 20px;">
+                            <button class="btn-primary w-100" onclick="saveCustomerInteraction()">Log Interaction</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Combined Messages Inbox -->
+                <div class="panel inbox-panel" style="margin-top: 24px;">
+                    <div class="panel-header">
+                        <h3>💬 Message History Log</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Client Name</th>
+                                    <th>Channel</th>
+                                    <th>Message Snippet</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crmMessagesInbox">
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Shipping -->
+            <section id="shipping" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Shipping Logistics Coordinator</h2>
+                        <p class="subtitle">Compute actual postal rates and print mock receipts</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Rate Calculator -->
+                    <div class="panel form-panel">
+                        <div class="panel-header">
+                            <h3>🚚 Rate Estimator</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="shipWeight">Parcel Weight (ounces)</label>
+                            <input type="number" id="shipWeight" value="5.0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="shipCarrier">Preferred Carrier</label>
+                            <select id="shipCarrier" onchange="syncServiceOptions()">
+                                <option value="USPS" selected>United States Postal Service (USPS)</option>
+                                <option value="UPS">United Parcel Service (UPS)</option>
+                                <option value="FedEx">FedEx Corp</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="shipService">Service Level</label>
+                            <select id="shipService">
+                                <option value="First Class" selected>First Class (Standard Envelopes/Flats)</option>
+                                <option value="Priority">Priority Mail (Insured Box)</option>
+                                <option value="Flat Rate">Priority Flat Rate Envelope</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="shipPackaging">Packaging Type</label>
+                            <select id="shipPackaging">
+                                <option value="standard">Bubble Kraft Mailer</option>
+                                <option value="envelope">Small Flat Rate Envelope</option>
+                                <option value="small_box">Small Box (Corrugated)</option>
+                                <option value="medium_box">Medium Box (Gift Wrapping)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="shipDest">Destination Region</label>
+                            <select id="shipDest">
+                                <option value="domestic" selected>Domestic US Shipping</option>
+                                <option value="international">International / Worldwide</option>
+                            </select>
+                        </div>
+                        <div style="padding: 0 20px 20px;">
+                            <button class="btn-primary w-100" onclick="estimateShippingRates()">Estimate Cost & Generate Label</button>
+                        </div>
+                    </div>
+
+                    <!-- Generated Label/Receipt -->
+                    <div class="panel label-output-panel">
+                        <div class="panel-header">
+                            <h3>🏷️ Generated Mailing Details</h3>
+                        </div>
+                        <div class="label-paper" id="labelPaper">
+                            <div class="label-header">
+                                <span class="badge-postage">PRIORITY MAIL STAMP</span>
+                                <div class="carrier-logo" id="labelCarrier">USPS POSTAGE PAID</div>
+                            </div>
+                            <hr class="dash">
+                            <div class="address-section">
+                                <div class="from-address">
+                                    <strong>FROM:</strong><br>
+                                    Elena Green Studio<br>
+                                    100 Creative Way<br>
+                                    Boston MA 02111
+                                </div>
+                                <br>
+                                <div class="to-address">
+                                    <strong>SHIP TO:</strong><br>
+                                    <span id="labelCustomerName">Michael Taylor</span><br>
+                                    55 Pine Street<br>
+                                    San Francisco CA 94107
+                                </div>
+                            </div>
+                            <hr class="dash">
+                            <div class="barcode-area">
+                                <div class="barcode-lines">||||| | |||| ||| | ||||| | || |||| | | ||| | || ||||</div>
+                                <div class="tracking-number">TRACKING: <span id="labelTrackingNum">US-9505501994026650</span></div>
+                            </div>
+                            <div class="label-footer">
+                                <span>Weight: <strong id="labelWeight">5.0oz</strong></span>
+                                <span>Est. Cost: <strong id="labelCost">$5.50</strong></span>
+                            </div>
+                        </div>
+                        <div class="recommendation-notice" id="shippingRecommendText">
+                            Submit rate computation details to view packaging guidelines.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Reminders & Tasks -->
+            <section id="reminders" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Reminders & Calendar Tasks</h2>
+                        <p class="subtitle">Never miss a wholesale follow-up, tax filing, or craft fair application</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Active Reminders Board -->
+                    <div class="panel list-panel">
+                        <div class="panel-header">
+                            <h3>⏰ Scheduled Reminders</h3>
+                            <div class="category-filters">
+                                <button class="filter-tag active" onclick="filterReminders('all')">All</button>
+                                <button class="filter-tag" onclick="filterReminders('Urgent')">Urgent</button>
+                                <button class="filter-tag" onclick="filterReminders('Material Restock')">Restock</button>
+                                <button class="filter-tag" onclick="filterReminders('Event')">Events</button>
+                                <button class="filter-tag" onclick="filterReminders('Tax')">Taxes</button>
+                            </div>
+                        </div>
+                        <ul class="reminders-list" id="remindersListContainer">
+                            <!-- Loaded dynamically -->
+                        </ul>
+                    </div>
+
+                    <!-- New Reminder Form -->
+                    <div class="panel form-panel">
+                        <div class="panel-header">
+                            <h3>➕ Add Custom Reminder</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="remTitle">Reminder Title</label>
+                            <input type="text" id="remTitle" placeholder="e.g. Order yellow cotton yarn batch">
+                        </div>
+                        <div class="form-group">
+                            <label for="remCategory">Task Category</label>
+                            <select id="remCategory">
+                                <option value="Urgent">🔴 Urgent Priority</option>
+                                <option value="Material Restock">📦 Material Restock</option>
+                                <option value="Event">📅 Event/Craft Fair</option>
+                                <option value="Tax">💰 Taxes & Accounting</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="remDueDate">Target Completion Date</label>
+                            <input type="date" id="remDueDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="remNotes">Additional Notes</label>
+                            <textarea id="remNotes" placeholder="Write any specific notes..."></textarea>
+                        </div>
+                        <div style="padding: 0 20px 20px;">
+                            <button class="btn-primary w-100" onclick="addNewReminder()">Schedule Task</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL: Add Product -->
+    <div class="modal" id="addProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Handmade Product to Inventory</h3>
+                <span class="close-btn" onclick="closeModal('addProductModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="addProdName">Product Name</label>
+                    <input type="text" id="addProdName" placeholder="e.g. Handmade Flower Hairclip">
+                </div>
+                <div class="form-group">
+                    <label for="addProdCategory">Category</label>
+                    <select id="addProdCategory">
+                        <option value="crochet">Crochet</option>
+                        <option value="bookmarks">Bookmarks</option>
+                        <option value="keychains">Keychains</option>
+                        <option value="jewelry">Jewelry</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="addProdQty">Initial Stock Qty</label>
+                    <input type="number" id="addProdQty" value="10">
+                </div>
+                <div class="form-group">
+                    <label for="addProdCost">Material Cost (USD)</label>
+                    <input type="number" id="addProdCost" value="2.50" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="addProdPrice">Selling Retail Price (USD)</label>
+                    <input type="number" id="addProdPrice" value="15.00" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="addProdMaterials">Materials List (comma separated)</label>
+                    <input type="text" id="addProdMaterials" placeholder="epoxy, silver pin, rose petals">
+                </div>
+                <div class="form-group">
+                    <label for="addProdTime">Creation Time (minutes)</label>
+                    <input type="number" id="addProdTime" value="45">
+                </div>
+                <div class="form-group">
+                    <label for="addProdTags">Search Tags (comma separated)</label>
+                    <input type="text" id="addProdTags" placeholder="hair accessories, gift for her, pink flower">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('addProductModal')">Cancel</button>
+                <button class="btn-primary" onclick="submitNewProduct()">Add to Stock</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- UI Logic Controller -->
+    <script src="js/app.js"></script>
+</body>
+</html>

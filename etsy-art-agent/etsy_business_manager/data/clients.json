@@ -1,0 +1,34 @@
+{
+  "clients": [
+    {
+      "client_id": "CL-0001",
+      "name": "Sarah Miller",
+      "email": "sarah.m@example.com",
+      "phone": "555-0199",
+      "tags": ["repeat buyer", "custom order interest"],
+      "total_orders": 3,
+      "last_interaction": "2026-07-06T15:30:00.000000",
+      "note": "Loves pastel crochet items. Asked about a custom crochet koala."
+    },
+    {
+      "client_id": "CL-0002",
+      "name": "Michael Taylor",
+      "email": "mtaylor@example.com",
+      "phone": "555-0145",
+      "tags": ["new customer"],
+      "total_orders": 1,
+      "last_interaction": "2026-07-06T11:20:00.000000",
+      "note": "Purchased wire wrap moonstone pendant. Asked about shipping options to CA."
+    },
+    {
+      "client_id": "CL-0003",
+      "name": "Emma Lewis",
+      "email": "emma.lewis@example.com",
+      "phone": "555-0177",
+      "tags": ["five-star reviewer"],
+      "total_orders": 2,
+      "last_interaction": "2026-07-05T09:15:00.000000",
+      "note": "Left a great 5-star review on resin pressed flower keychains."
+    }
+  ]
+}

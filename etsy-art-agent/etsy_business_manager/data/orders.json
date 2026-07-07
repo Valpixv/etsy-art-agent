@@ -1,0 +1,55 @@
+{
+  "orders": [
+    {
+      "order_id": "ORD-0001",
+      "client_id": "CL-0001",
+      "client_name": "Sarah Miller",
+      "status": "Inquiry",
+      "items": [
+        {
+          "name": "Custom Amigurumi Koala",
+          "quantity": 1,
+          "price": 40.00
+        }
+      ],
+      "shipping_carrier": "USPS",
+      "shipping_cost": 4.50,
+      "weight_oz": 6.0,
+      "date": "2026-07-06T15:30:00.000000"
+    },
+    {
+      "order_id": "ORD-0002",
+      "client_id": "CL-0002",
+      "client_name": "Michael Taylor",
+      "status": "Sketching",
+      "items": [
+        {
+          "name": "Wire Wrap Moonstone Pendant",
+          "quantity": 1,
+          "price": 42.00
+        }
+      ],
+      "shipping_carrier": "USPS",
+      "shipping_cost": 5.50,
+      "weight_oz": 3.2,
+      "date": "2026-07-06T11:20:00.000000"
+    },
+    {
+      "order_id": "ORD-0003",
+      "client_id": "CL-0003",
+      "client_name": "Emma Lewis",
+      "status": "Shipped",
+      "items": [
+        {
+          "name": "Resin Pressed Flower Keychain",
+          "quantity": 2,
+          "price": 30.00
+        }
+      ],
+      "shipping_carrier": "USPS",
+      "shipping_cost": 4.50,
+      "weight_oz": 4.0,
+      "date": "2026-07-04T10:00:00.000000"
+    }
+  ]
+}

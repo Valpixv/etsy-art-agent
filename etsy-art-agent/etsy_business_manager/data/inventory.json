@@ -1,0 +1,60 @@
+{
+  "items": [
+    {
+      "item_id": "CR-0001",
+      "name": "Amigurumi Cozy Bear Plush",
+      "category": "crochet",
+      "description": "A soft, hand-stitched amigurumi bear made with organic cotton yarn and stuffed with premium polyester filling. Perfect for nursery decor or cuddling.",
+      "quantity": 2,
+      "material_cost": 5.00,
+      "selling_price": 35.00,
+      "materials_used": ["organic cotton yarn", "safety eyes", "polyester fiberfill"],
+      "time_to_make_minutes": 120,
+      "tags": ["crochet bear", "nursery decor", "handmade plush", "amigurumi"],
+      "last_restocked": "2026-07-01T12:00:00.000000",
+      "low_stock_threshold": 5
+    },
+    {
+      "item_id": "BM-0002",
+      "name": "Ocean Wave Crochet Bookmark",
+      "category": "bookmarks",
+      "description": "An elegant, lightweight bookmark styled like rolling ocean waves with a tasselled end. Made from durable embroidery floss.",
+      "quantity": 8,
+      "material_cost": 1.50,
+      "selling_price": 12.00,
+      "materials_used": ["blue embroidery floss", "gold metallic thread", "fabric stiffener"],
+      "time_to_make_minutes": 30,
+      "tags": ["book accessories", "crochet bookmark", "gifts for readers", "ocean wave"],
+      "last_restocked": "2026-07-03T15:30:00.000000",
+      "low_stock_threshold": 5
+    },
+    {
+      "item_id": "KC-0003",
+      "name": "Resin Pressed Flower Keychain",
+      "category": "keychains",
+      "description": "Hexagonal crystal-clear epoxy resin keychain showcasing real dried baby's breath and gold flakes. Gold hardware included.",
+      "quantity": 3,
+      "material_cost": 3.00,
+      "selling_price": 15.00,
+      "materials_used": ["epoxy resin", "dried flowers", "gold flakes", "brass keychain ring"],
+      "time_to_make_minutes": 45,
+      "tags": ["resin art", "flower keychain", "pressed flowers", "personalized gifts"],
+      "last_restocked": "2026-07-02T10:15:00.000000",
+      "low_stock_threshold": 5
+    },
+    {
+      "item_id": "JW-0004",
+      "name": "Wire Wrap Moonstone Pendant",
+      "category": "jewelry",
+      "description": "Raw rainbow moonstone wrapped in intricate oxidized copper wire, suspended on an adjustable matching copper chain.",
+      "quantity": 5,
+      "material_cost": 7.50,
+      "selling_price": 42.00,
+      "materials_used": ["rainbow moonstone cabochon", "copper wire", "lobster clasp", "copper chain"],
+      "time_to_make_minutes": 90,
+      "tags": ["wire wrapped", "moonstone jewelry", "copper necklace", "crystal pendant"],
+      "last_restocked": "2026-07-05T18:45:00.000000",
+      "low_stock_threshold": 5
+    }
+  ]
+}
